@@ -1,4 +1,4 @@
-namespace central;
+namespace outro;
 
 public class Carta
 {
