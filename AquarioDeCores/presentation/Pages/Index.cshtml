@@ -1,0 +1,13 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@foreach (var item in Model.Cores)
+{
+    
+    <div style="height: 50px; width:50px; float:left;background-color:@item">
+    </div>
+    
+}

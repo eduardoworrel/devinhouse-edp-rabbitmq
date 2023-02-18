@@ -9,7 +9,11 @@ var factory = new ConnectionFactory() {
     Password = "devintwitter"
 };
 
+var list = new Dictionary<int,dynamic>();
+
+
 app.MapPost("/", (Postagem postagem) => {
+
     using(var connection = factory.CreateConnection()) //disposable
     using(var channel = connection.CreateModel())
     {
@@ -18,7 +22,7 @@ app.MapPost("/", (Postagem postagem) => {
                         exclusive: false,
                         autoDelete: false,
                         arguments: null);
-    
+
     }
 });
 

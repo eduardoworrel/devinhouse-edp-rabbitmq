@@ -12,7 +12,7 @@ var factory = new ConnectionFactory() {
 using(var connection = factory.CreateConnection())
 using(var channel = connection.CreateModel())
 {
-    channel.QueueDeclare(queue: "hello",
+    channel.QueueDeclare(queue: "hello2",
                             durable: false,
                             exclusive: false,
                             autoDelete: false,
