@@ -13,27 +13,34 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div>
-        <textarea id="twit"></textarea>
+        <textarea id="tweet"></textarea>
         <button id="ok">Twitar</button>
     </div>
+
+    <script>
+    const submit = document.querySelector("#ok")
+    const conteudoSalvo = document.querySelector("#tweet")
+
+      submit.onclick = ()=>{
+          const inputs = {
+              "email": "@User.Identity?.Name",
+              "mensagem": conteudoSalvo.value,
+          }
+          
+          fetch("http://localhost:5266/api/Tweet",
+          {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(inputs),
+          }).then(()=>{
+              //atualizaFront()
+          })
+      }
+    </script>
 }
+
+
 <hr>
 </div>
-<script>
-    const ok = document.body.querySelector("#ok")
-    const twit = document.body.querySelector("#twit")
-
-    ok.onclick = ()=>{
-        const conteudo = twit.value;
-        fetch("http://localhost:5275",{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                 userId: "@User.Identity?.Name",
-                 conteudo: twit
-            }), 
-        }).catch((err)=> console.log(err))
-    }
-</script>
