@@ -1,29 +1,25 @@
-using RabbitMQ.Client;
-
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-var factory = new ConnectionFactory() { 
-    HostName = "142.93.173.18",
-    UserName = "admin",
-    Password = "devintwitter"
-};
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-var list = new Dictionary<int,dynamic>();
+app.UseHttpsRedirection();
 
+app.UseAuthorization();
 
-app.MapPost("/", (Postagem postagem) => {
-
-    using(var connection = factory.CreateConnection()) //disposable
-    using(var channel = connection.CreateModel())
-    {
-        channel.QueueDeclare(queue: "SalvaRapidoQueue",
-                        durable: false,
-                        exclusive: false,
-                        autoDelete: false,
-                        arguments: null);
-
-    }
-});
+app.MapControllers();
 
 app.Run();
