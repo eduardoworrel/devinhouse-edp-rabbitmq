@@ -1,7 +1,11 @@
-﻿namespace coreApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace coreApi.Models
 {
     public class Tweet
     {
+        [Key]
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Mensagem { get; set; }
         public string Ipv4 { get; set; }
