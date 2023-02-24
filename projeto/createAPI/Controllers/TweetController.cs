@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using createAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,20 +28,30 @@ namespace createApi.Controllers
 
         // POST api/<TweetController>
         [HttpPost]
-        public ActionResult Post([FromBody] Tweet model)
+        public ActionResult Post([FromBody] TweetViewModel model)
         {
             if (model == null)
             {
                 return BadRequest(ModelState);
             }
+
+            var tweet = new Tweet()
+            {
+                Email = model.Email,
+                Mensagem = model.Mensagem,
+                Ipv4 = GetIpv4()
+
+            };
             using var connection = _factory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            try {
-                PublicaTweet(model, channel);
+            try
+            {
+                PublicaTweet(tweet, channel);
                 return Ok();
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 return BadRequest(ex);
             }
         }
@@ -60,6 +71,11 @@ namespace createApi.Controllers
                             routingKey: "SalvaRapidoQueue",
                             basicProperties: null,
                             body: modelBytes);
+        }
+
+        private string GetIpv4()
+        {
+            return Response.HttpContext.Connection.RemoteIpAddress.ToString();
         }
 
     }
