@@ -25,10 +25,10 @@ namespace coreApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tweet>>> GetTweets()
         {
-          if (_context.Tweets == null)
-          {
-              return NotFound();
-          }
+            if (_context.Tweets == null)
+            {
+                return NotFound();
+            }
             return await _context.Tweets.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace coreApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tweet>> GetTweet(int id)
         {
-          if (_context.Tweets == null)
-          {
-              return NotFound();
-          }
+            if (_context.Tweets == null)
+            {
+                return NotFound();
+            }
             var tweet = await _context.Tweets.FindAsync(id);
 
             if (tweet == null)
@@ -84,12 +84,12 @@ namespace coreApi.Controllers
         // POST: api/Tweets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tweet>> PostTweet(Tweet tweet)
+        public async Task<ActionResult<Tweet>> PostTweet([FromForm] Tweet tweet)
         {
-          if (_context.Tweets == null)
-          {
-              return Problem("Entity set 'CoreApiContext.Tweets'  is null.");
-          }
+            if (_context.Tweets == null)
+            {
+                return Problem("Entity set 'CoreApiContext.Tweets'  is null.");
+            }
             _context.Tweets.Add(tweet);
             await _context.SaveChangesAsync();
 
