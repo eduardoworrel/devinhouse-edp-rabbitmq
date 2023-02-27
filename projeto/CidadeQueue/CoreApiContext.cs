@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 
-    public class SalvaRapidoContext : DbContext
+    public class CoreApiContext : DbContext
     {
 
 
